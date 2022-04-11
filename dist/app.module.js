@@ -9,10 +9,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const ExchangeRateModule_1 = require("./features/apiProviders/exchangerate/ExchangeRateModule");
 const FrankfurterModule_1 = require("./features/apiProviders/frankfurter/FrankfurterModule");
+const ProviderSelectorModule_1 = require("./features/providerSelector/ProviderSelectorModule");
 const QuoteModule_1 = require("./features/quote/QuoteModule");
 const config_1 = require("@nestjs/config");
 const common_1 = require("@nestjs/common");
-const ProviderSelectorModule_1 = require("./features/providerSelector/ProviderSelectorModule");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([

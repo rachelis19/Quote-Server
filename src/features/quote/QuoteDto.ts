@@ -1,5 +1,5 @@
 import {IsValidCurrencyCode} from './QuoteRules'
-import { IsInt, IsNotEmpty, Validate } from 'class-validator'
+import { IsNotEmpty, Validate } from 'class-validator'
 
 
 export class QuoteDto{
@@ -13,6 +13,5 @@ export class QuoteDto{
     to_currency_code: string
     
     @IsNotEmpty()
-    @IsInt()
     amount: number
 }

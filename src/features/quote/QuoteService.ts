@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { QuoteResponse } from '../../core/responses/QuoteResponse'
 import exchangeRateNormalizer from '../../core/utils/exchangeRateNormalizer'
-import eexchangeRateNormalizer from '../../core/utils/exchangeRateNormalizer'
 import { ProviderSelectorService } from '../providerSelector/ProviderSelectorService'
 
 

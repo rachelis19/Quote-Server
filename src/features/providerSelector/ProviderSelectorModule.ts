@@ -1,4 +1,3 @@
-
 import { ExchangeRateService } from '../apiProviders/exchangerate/ExchangeRateService'
 import { ExchangeRateModule } from '../apiProviders/exchangerate/ExchangeRateModule'
 import { FrankfurterService } from '../apiProviders/frankfurter/FrankfurterService'

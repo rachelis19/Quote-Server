@@ -18,13 +18,25 @@ const common_1 = require("@nestjs/common");
 const QuoteService_1 = require("./QuoteService");
 const QuoteDto_1 = require("./QuoteDto");
 let QuoteController = QuoteController_1 = class QuoteController {
-    constructor(quotesService) {
+    constructor(quotesService, cacheManager) {
         this.quotesService = quotesService;
+        this.cacheManager = cacheManager;
         this.logger = new common_1.Logger(QuoteController_1.name);
     }
     async getQuote(qouteRequest) {
-        this.logger.log(`Receive request to exchange with ${qouteRequest.from_currency_code} base to ${qouteRequest.to_currency_code}`);
-        return await this.quotesService.findQuote(qouteRequest.from_currency_code.toUpperCase(), qouteRequest.to_currency_code.toUpperCase(), qouteRequest.amount);
+        const from_currency = qouteRequest.from_currency_code.toUpperCase();
+        const to_currency = qouteRequest.to_currency_code.toUpperCase();
+        const amount = qouteRequest.amount;
+        const chacheKey = `${from_currency}${to_currency}${amount}`;
+        this.logger.log(`Receive request to exchange with ${from_currency} base to ${to_currency}`);
+        const cachedValue = await this.cacheManager.get(chacheKey);
+        if (cachedValue) {
+            this.logger.log('Returning value from cache');
+            return cachedValue;
+        }
+        const quoteResponse = await this.quotesService.findQuote(from_currency, to_currency, amount);
+        await this.cacheManager.set(chacheKey, quoteResponse, { ttl: 120000 });
+        return quoteResponse;
     }
 };
 __decorate([
@@ -36,7 +48,8 @@ __decorate([
 ], QuoteController.prototype, "getQuote", null);
 QuoteController = QuoteController_1 = __decorate([
     (0, common_1.Controller)('api'),
-    __metadata("design:paramtypes", [QuoteService_1.QuoteService])
+    __param(1, (0, common_1.Inject)(common_1.CACHE_MANAGER)),
+    __metadata("design:paramtypes", [QuoteService_1.QuoteService, Object])
 ], QuoteController);
 exports.QuoteController = QuoteController;
 //# sourceMappingURL=QuoteController.js.map
